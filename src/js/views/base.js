@@ -6,7 +6,11 @@ export const DOM = {
     resultsPages: document.querySelector('.results__pages'),
     loaderSpinner: 'loader',
     buttonPrev: 'results__btn--prev',
-    buttonNext: 'results__btn--next'
+    buttonNext: 'results__btn--next',
+    recipe: document.querySelector('.recipe'),
+    list: document.querySelector('.shopping__list'),
+    likesMenu: document.querySelector('.likes__field'),
+    likesList: document.querySelector('.likes__list')
 }
 
 export const displayLoader = parent => {

@@ -7,6 +7,28 @@ export const loadResults = (recipes, page = 1, resultsPerPage = 10) => {
     displayResults(recipes, page, resultsPerPage);
 }
 
+export const highlightSelect = id => {
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    resultsArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    })
+    document.querySelector(`[href*="#${id}"]`).classList.add('results__link--active');
+}
+
+export const shortenTitle = (title, maxLength = 17) => {
+    const shortTitle = [];
+    if (title.length > maxLength) {
+        title.split(/[\s-]+/).reduce((totalCharacters, cur) => {
+            if(totalCharacters + cur.length <= maxLength) {
+                shortTitle.push(cur);
+            }
+            return totalCharacters + cur.length;
+        }, 0);
+        return `${shortTitle.join(' ')}...`;
+    }
+    return title;
+}
+
 const displayResults = (recipes, page, resultsPerPage) => {
     clearSearchField();
     const start = (page -1) * resultsPerPage;
@@ -51,7 +73,7 @@ const displayPageButtons = (page, resultsNum, resultsPerPage) => {
 const displaySingleRecipe = recipe => {
     const recipeHtml = `
         <li>
-            <a class="results__link results__link--active" href="#${recipe.recipe_id}">
+            <a class="results__link" href="#${recipe.recipe_id}">
                 <figure class="results__fig">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                 </figure>
@@ -65,19 +87,6 @@ const displaySingleRecipe = recipe => {
     DOM.searchResultsList.insertAdjacentHTML('beforeend', recipeHtml);
 }
 
-const shortenTitle = (title, maxLength = 17) => {
-    const shortTitle = [];
-    if (title.length > maxLength) {
-        title.split(/[\s-]+/).reduce((totalCharacters, cur) => {
-            if(totalCharacters + cur.length <= maxLength) {
-                shortTitle.push(cur);
-            }
-            return totalCharacters + cur.length;
-        }, 0);
-        return `${shortTitle.join(' ')}...`;
-    }
-    return title;
-}
 
 const clearSearchField = () => {
     DOM.searchQuery.value = '';
